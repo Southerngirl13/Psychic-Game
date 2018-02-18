@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <title>Psychic Game</title>
+</head>
+
+<body class="centered-wrapper">
+
+    <div id="game">
+        <h2>I'm thinking of a letter between A &amp; Z</h2>
+        <h3>Guess which letter and Press Enter</h4>
+        <h4>( I'll give you 5 guesses )</h3>
+        <p>Total Wins:</p>
+        <p>Total Losses:</p>
+        <p>Guesses Remaining:</p>
+        <p>Your Guesses so far:</p>
+
+    </div>
+
+    <script type="text/javascript">
+        var wins = 0;
+        var losses = 0;
+        var guessesLeft = 5;
+        var guessesSoFar = []; // array to push user choices to
+        var computerChoices = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']; //list of letters to choose from
+        document.onkeyup = function (event) {
+            var userGuess = String.fromCharCode(event.keyCode).toLowerCase(); //takes in user guess
+            var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)]; //computer selects random letter
+            guessesSoFar.push(userGuess); //pushing user guess to guesses so far
+            if (userGuess == computerGuess) {
+                wins++;
+
+                alert('Congratulations! You read my mind!');
+                guessesLeft = 5; //reseting the guesses back to 5 so that the user can play again
+                guessesSoFar.length = 0; //this removes everything from the guesses so far array - guesses from the previous round don't show
+            }
+            else if (guessesLeft == 0) {
+                losses++;
+                alert('You lost. Let\'s try again.');
+                guessesLeft = 5;
+                guessesSoFar.length = 0;
+            }
+            else if (userGuess !== computerGuess) {
+                guessesLeft--; //decrementing the guesses left
+            }
+            // Taking the tallies and displaying them in HTML    
+            var html = "<h2>I'm thinking of a letter between A &amp; Z</h2>" +
+                "<h3>Guess which letter and Press Enter</h3>" +
+                "<h4>( I'll give you 5 guesses )</h3>" +
+                "<p>Total Wins: " +
+                wins +
+                "</p>" +
+                "<p>Total Losses: " +
+                losses +
+                "</p>" +
+                "<p>Guesses Remaining: " +
+                guessesLeft +
+                "</p>" +
+                "<p>Your Guesses so far: " +
+                guessesSoFar +
+                "</p>"
+                ;
+            // Placing the html into the game ID
+            document.querySelector('#game').innerHTML = html;
+        }
+    
+    </script>
+
+</body>
+
+</html>
+ 
